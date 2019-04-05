@@ -27,24 +27,24 @@
 ## Contents
 
 * [Requirements](#Requirements)
-* [Installing]
-* [Setup AWS]
-* [Deploy to AWS]
-* [Run it locally]
-* [Trying the service with Postman]
-* [Testing]
-* [Structure]
-  + [Configuration]
-  + [Seeds]
-  + [Lambda Function]
-  + [App Service]
-    + [DynamoDB]
-    + [Elastic Search]
-    + [S3]
-  + [Common Files]
-  + [Script]
-  + [Tests]
-  + [Other Files]
+* [Installing](#Installing)
+* [Setup AWS](#Setup AWS)
+* [Deploy to AWS](#Deploy to AWS)
+* [Run it locally](#Run it locally)
+* [Trying the service with Postman](#Trying the service with Postman)
+* [Testing](#Testing)
+* [Structure](#Structure)
+  + [Configuration](#Configuration)
+  + [Seeds](#Seeds)
+  + [Lambda Function](#Lambda Function)
+  + [App Service](#App Service)
+    + [DynamoDB](#DynamoDB)
+    + [Elastic Search](#Elastic Search)
+    + [S3](#S3)
+  + [Common Files](#Common Files)
+  + [Script](#Script)
+  + [Tests](#Tests)
+  + [Other Files](#Other Files)
 
 
 ## Requirements
