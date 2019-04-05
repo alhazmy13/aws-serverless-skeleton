@@ -1,8 +1,4 @@
-from http import HTTPStatus
-
 from src.app.auth.auth_policy import AuthPolicy
-from src.common.exceptions import ExceptionHandler
-from src.common.http_response import HTTPResponse
 from src.common.jwt_validator import JwtValidator
 
 
@@ -20,21 +16,8 @@ class AuthorizerService(object):
         execute function
         :return: policy document to API gateway with permission to invoke lambda
         """
-        try:
-            policy_document = self.auth_authorizer_check()
-            return policy_document
-        except NameError as ex:
-            ExceptionHandler.handel_exception(exception=ex)
-            return HTTPResponse.to_json_response(HTTPStatus.UNAUTHORIZED)
-        except AttributeError as ex:
-            ExceptionHandler.handel_exception(exception=ex)
-            return HTTPResponse.to_json_response(HTTPStatus.UNAUTHORIZED)
-        except KeyError as ex:
-            ExceptionHandler.handel_exception(exception=ex)
-            return HTTPResponse.to_json_response(HTTPStatus.UNAUTHORIZED)
-        except TypeError as ex:
-            ExceptionHandler.handel_exception(exception=ex)
-            return HTTPResponse.to_json_response(HTTPStatus.UNAUTHORIZED)
+        policy_document = self.auth_authorizer_check()
+        return policy_document
 
     def auth_authorizer_check(self):
         """

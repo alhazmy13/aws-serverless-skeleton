@@ -33,23 +33,6 @@ class EventValidator(object):
         return authorizer.get('principalId')
 
     @classmethod
-    def get_user_mobile_from_event(cls, event):
-        """
-        this function will return the user sub event request
-        :param event: event request
-        :return: the user sub
-        """
-        # Workaround until we found a solution to deploy cognito locally
-        if os.environ.get('IS_OFFLINE') is not None:
-            return os.environ.get('LOCAL_USER_MOBILE')
-        request_context = event.get('requestContext')
-        authorizer = request_context.get('authorizer')
-        claims = authorizer.get('claims')
-        if claims is not None:
-            return claims.get('phone_number')
-        return authorizer.get('principalId')
-
-    @classmethod
     def get_query_from_event(cls, event, key):
         """
         this function will return the value for any key from queryStringParameters

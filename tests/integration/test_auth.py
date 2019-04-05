@@ -31,6 +31,13 @@ class PostServiceTestCase(unittest.TestCase):
         user = UserModel.get(self.user_sub)
         self.assertEqual(user.given_name, 'foo')
 
+    def test_authorizer_service_should_throw_exception_if_event_not_correct(self):
+        event = copy.deepcopy(self.event)
+        event['authorizationToken'] = 'ANY_FAKE_TOKEN'
+
+        service = PostAuthService(event="")
+        self.assertRaises(TypeError, service.execute())
+
 
 class AuthorizerServiceTestCase(unittest.TestCase):
     def setUp(self):
@@ -40,16 +47,14 @@ class AuthorizerServiceTestCase(unittest.TestCase):
         event = copy.deepcopy(self.event)
         event['authorizationToken'] = 'ANY_FAKE_TOKEN'
         auth_service = AuthorizerService(event=event)
-        self.assertRaises(Exception,
-                          auth_service.execute)
+        self.assertRaises(Exception, auth_service.execute)
 
     def test_authorizer_service_should_throw_401_when_the_token_is_empty(self):
         event = copy.deepcopy(self.event)
         event['authorizationToken'] = ''
 
         auth_service = AuthorizerService(event=event)
-        self.assertRaises(Exception,
-                          auth_service.execute)
+        self.assertRaises(Exception, auth_service.execute)
 
     def test_authorizer_service_should_return_valid_policy(self):
         event = copy.deepcopy(self.event)
