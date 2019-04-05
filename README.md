@@ -1,6 +1,8 @@
 
 # Aws Serverless Skeleton 
 
+[![Coverage Status](https://coveralls.io/repos/github/alhazmy13/aws-serverless-skeleton/badge.svg?branch=master)](https://coveralls.io/github/alhazmy13/aws-serverless-skeleton?branch=master)
+[![Build Status](https://travis-ci.com/alhazmy13/aws-serverless-skeleton.svg?branch=master)](https://travis-ci.com/alhazmy13/aws-serverless-skeleton)
 # Overview
 
 *Aws Serverless Skeleton* is built on top of AWS (Amazon Web Service) using multiple services :
@@ -10,7 +12,6 @@
 * **DynamoDB Streams**
 * **S3**
 * **Lambda**
-* **SNS** 
 * **ES (Elasticsearch Service)**
 * **CloudFormation**
 * **CloudWatch**
