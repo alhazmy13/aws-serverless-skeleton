@@ -1,0 +1,38 @@
+{
+  "name": "aws-serverless-skeleton",
+  "version": "1.0.0",
+  "description": "Aws Serverless Skeleton",
+  "author": "Alhazmy13",
+  "license": "MIT",
+  "scripts": {
+    "deploy-dev": "sls deploy --stage dev",
+    "deploy-staging": "sls deploy --stage staging",
+    "deploy-prod": "sls deploy --stage prod",
+    "dynamo-install": "sls dynamodb install --stage local",
+    "elasticsearch-install": "./scripts/install_es.py",
+    "dynamo-start": "./scripts/runner.py start dynamodb",
+    "dynamo-start-seed": "./scripts/runner.py start dynamodb --seed",
+    "offline-start": "./scripts/runner.py start offline",
+    "offline-start-verbose": "./scripts/runner.py --verbose start offline",
+    "elasticsearch-start": "./scripts/runner.py start elasticsearch",
+    "elasticsearch-start-seed": "./scripts/runner.py start elasticsearch --seed",
+    "dynamo-stop": "./scripts/runner.py stop dynamodb",
+    "offline-stop": "./scripts/runner.py stop offline",
+    "elasticsearch-stop": "./scripts/runner.py stop elasticsearch",
+    "start": "./scripts/runner.py --start-all",
+    "start-verbose": "./scripts/runner.py --verbose --start-all",
+    "stop": "./scripts/runner.py --stop-all"
+  },
+  "devDependencies": {
+    "serverless-aws-documentation": "https://github.com/alhazmy13/serverless-aws-documentation/archive/1.1.1.tar.gz",
+    "serverless-dynamodb-local": "https://github.com/alhazmy13/serverless-dynamodb-local/archive/0.2.36.tar.gz",
+    "serverless-offline-python": "^3.21.2",
+    "serverless-plugin-existing-s3": "^2.2.2",
+    "serverless-pseudo-parameters": "^2.4.0",
+    "serverless-python-requirements": "^3.3.1",
+    "serverless-reqvalidator-plugin": "^1.0.3"
+  },
+  "dependencies": {
+    "serverless": "^1.35.1"
+  }
+}

@@ -1,0 +1,33 @@
+documentation:
+  api:
+    info:
+      version: '2'
+      title: 'Aws Serverless Skeleton API'
+      description: 'Skeleton API'
+      termsOfService: 'https://alhazmy13.net'
+      contact:
+        name: 'alhazmy13'
+        url: 'https://alhazmy13.net'
+        email: 'met@alhazmy13.net'
+    tags:
+      -
+        name: SKELETON_Post
+        description: 'Post functions'
+      -
+        name: SKELETON_User
+        description: 'User functions'
+      -
+        name: SKELETON_Auth
+        description: 'Auth functions'
+  models:
+    -
+      name: SkeletonPost
+      contentType: application/json
+      schema:
+        type: object
+        properties:
+          title:
+            type: string
+          post:
+            type: string
+   

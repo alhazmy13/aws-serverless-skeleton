@@ -1,0 +1,61 @@
+service: aws-serverless-skeleton
+
+frameworkVersion: ">=1.1.0 <2.0.0"
+
+package:
+  exclude:
+    - node_modules/**
+    - .idea/**
+    - .requirements/**
+    - env/**
+    - config/**
+    - README.md
+    - package.json
+    - package-lock.json
+    - requirements.txt
+    - requirements-dev.txt
+    - .tox/**
+    - .cache/**
+    - .serverless/**
+    - seed/**
+    - tests/**
+    - tox.ini
+    - .pytest_cache/**
+    - htmlcov/**
+  include:
+    - config/resource/logging.yaml
+
+plugins:
+  - serverless-reqvalidator-plugin
+  - serverless-aws-documentation
+  - serverless-python-requirements
+  - serverless-dynamodb-local
+  - serverless-offline-python
+  - serverless-plugin-existing-s3
+  - serverless-pseudo-parameters
+
+custom: ${file(config/${self:provider.stage}-env.yml):custom}
+
+functions: ${file(config/${self:provider.stage}-env.yml):functions}
+
+
+provider:
+  name: aws
+  runtime: python3.6
+  region: eu-west-1
+  stage: ${opt:stage, 'local'}
+  environment: ${file(config/${self:provider.stage}-env.yml):environment}
+  iamRoleStatements: ${file(config/resource/iam_policies.yml):iamRoleStatements}
+  vpc:
+      securityGroupIds:
+        - ${self:provider.environment.VPC_SECURITY_GROUP}
+      subnetIds:
+        - ${self:provider.environment.VPC_SUBNET_PUBLIC_1}
+        - ${self:provider.environment.VPC_SUBNET_PUBLIC_2}
+
+resources:
+  - ${file(config/resource/dynamodb.yml)}
+  - ${file(config/resource/es.yml)}
+  - ${file(config/resource/rules.yml)}
+  - ${file(config/resource/s3.yml)}
+  - ${file(config/resource/validators.yml)}

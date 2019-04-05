@@ -1,0 +1,4 @@
+auth_post:
+  handler: lambda_functions/auth/auth.post_auth
+auth_authorizer:
+  handler: lambda_functions/auth/auth.authorizer

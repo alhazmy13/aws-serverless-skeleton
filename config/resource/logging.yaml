@@ -1,0 +1,47 @@
+---
+version: 1
+disable_existing_loggers: False
+
+formatters:
+    simple:
+        format: "%(request_id)s %(created)f %(levelname)s %(funcName)s %(filename)s %(lineno)d: %(message)s"
+    datadog:
+        format: "MONITORING|%(asctime)s|%(metric_value)s|%(metric_type)s|%(metric_name)s|%(tag_value)s"
+        datefmt: "%s"
+
+# two handlers, one for default and one for datadog but both goes to stdout
+handlers:
+    console:
+        class: logging.StreamHandler
+        formatter: simple
+        stream: ext://sys.stdout
+    datadog:
+        class: logging.StreamHandler
+        formatter: datadog
+        stream: ext://sys.stdout
+
+#defining our loggers, default and datadog both at INFO level.
+loggers:
+    prod:
+        level: INFO
+        handlers: [console]
+        propagate: no
+    dev:
+        level: DEBUG
+        handlers: [console]
+        propagate: no
+    local:
+        level: DEBUG
+        handlers: [console]
+        propagate: no
+    staging:
+        level: DEBUG
+        handlers: [console]
+        propagate: no
+    datadog:
+        level: INFO
+        handlers: [datadog]
+        propagate: no
+
+
+

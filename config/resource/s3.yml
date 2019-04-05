@@ -1,0 +1,27 @@
+Resources:
+  S3BucketUpload:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: ${self:provider.environment.S3_UPLOAD_BUCKET}
+  UploadBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      PolicyDocument:
+        Id: "S3BucketUploadPolicy"
+        Version: "2012-10-17"
+        Statement:
+          - Sid: PublicReadForGetBucketObjects
+            Effect: Allow
+            Principal: '*'
+            Action:
+              - 's3:GetObject'
+              - 's3:PutObject'
+            Resource:
+              Fn::Join:
+                - ''
+                -
+                  - 'arn:aws:s3:::'
+                  - Ref: S3BucketUpload
+                  - /*
+      Bucket:
+        Ref: S3BucketUpload

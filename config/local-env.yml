@@ -1,0 +1,94 @@
+environment:
+  DYNAMODB_POST_TABLE: "${self:service}-${self:provider.stage}-post"
+  DYNAMODB_USER_TABLE: "${self:service}-${self:provider.stage}-user"
+  DYNAMODB_HOST: "http://localhost:8000"
+  REGION: ${self:provider.region}
+  STAGE: ${self:provider.stage}
+  LOCAL_USER_ID: "9929942b-a90b-443d-96bf-19393615f6d7"
+  ES_ENDPOINT: "localhost:9200"
+  S3_UPLOAD_BUCKET: ${self:custom.s3_upload.bucket}
+  S3_UPLOAD_URL_DEFAULT_TTL: ${self:custom.s3_upload.url_default_ttl}
+  S3_RULE: ""
+  VPC_SECURITY_GROUP: ""
+  VPC_SUBNET_PUBLIC_1: ""
+  VPC_SUBNET_PUBLIC_2: ""
+  CLOUDWATCH_NAMESPACE: "skeleton/${self:provider.stage}"
+
+custom:
+  s3_upload:
+    bucket: ${self:service}-${self:provider.stage}-upload
+    url_default_ttl: "3600"
+  es:
+    ElasticsearchClusterConfig:
+      InstanceType: m4.large.elasticsearch
+      InstanceCount: 1
+  dynamodb:
+    start:
+      migrate: true
+      seed: true
+    seed:
+      tables:
+        sources:
+          - table: ${self:provider.environment.DYNAMODB_POST_TABLE}
+            sources: [./seed/post.json]
+          - table: ${self:provider.environment.DYNAMODB_USER_TABLE}
+            sources: [./seed/user.json]
+    DYNAMODB_POST_TABLE:
+      ReadCapacityUnits: 1
+      WriteCapacityUnits: 1
+      BillingMode: PAY_PER_REQUEST
+      PointInTimeRecoveryEnabled: false
+    DYNAMODB_USER_TABLE:
+      ReadCapacityUnits: 1
+      WriteCapacityUnits: 1
+      BillingMode: PAY_PER_REQUEST
+      PointInTimeRecoveryEnabled: false
+
+functions:
+  post_get:
+    handler: lambda_functions/post/post.get
+    events:
+      - http:
+          path: post/{id}
+          method: get
+          cors: true
+
+  post_create:
+    handler: lambda_functions/post/post.create
+    events:
+      - http:
+          path: post
+          method: post
+          cors: true
+
+  post_list:
+    handler: lambda_functions/post/post.list
+    events:
+      - http:
+          path: post
+          method: get
+          cors: true
+
+  # post_delete:
+  #   handler: lambda_functions/post/post.list
+  #   events:
+  #     - http:
+  #         path: post/{id}
+  #         method: delete
+  #         cors: true
+
+  # post_update:
+  #   handler: lambda_functions/post/post.list
+  #   events:
+  #     - http:
+  #         path: post/{id}
+  #         method: put
+  #         cors: true
+
+  auth_authorizer:
+    handler: lambda_functions/auth/auth.lambda_handler
+
+authorizer:
+  name: auth_authorizer
+  resultTtlInSeconds: 0
+  type: token

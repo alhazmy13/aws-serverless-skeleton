@@ -1,0 +1,67 @@
+post_get:
+  handler: lambda_functions/post/post.get
+  events:
+    - http:
+        path: post/{id}
+        method: get
+        cors: true
+        authorizer: ${file(config/${self:provider.stage}-env.yml):authorizer}
+        documentation:
+          description: Get post request by id
+          tags:
+            - SKELETON_Post
+
+post_create:
+  handler: lambda_functions/post/post.create
+  events:
+    - http:
+        path: post
+        method: post
+        cors: true
+        authorizer: ${file(config/${self:provider.stage}-env.yml):authorizer}
+        reqValidatorName: onlyBody
+        documentation:
+          tags:
+            - SKELETON_Post
+          description: POST method for create new post.
+          requestModels:
+            "application/json": SkeletonPost
+
+post_list:
+  handler: lambda_functions/post/post.list
+  events:
+    - http:
+        path: post
+        method: get
+        cors: true
+        authorizer: ${file(config/${self:provider.stage}-env.yml):authorizer}
+        documentation:
+          description: Get all posts.
+          tags:
+            - SKELETON_Post
+
+post_delete:
+  handler: lambda_functions/post/post.list
+  events:
+    - http:
+        path: post/{id}
+        method: delete
+        cors: true
+        authorizer: ${file(config/${self:provider.stage}-env.yml):authorizer}
+        documentation:
+          description: Delete post by id (for admin only).
+          tags:
+            - SKELETON_Post
+
+post_update:
+  handler: lambda_functions/post/post.list
+  events:
+    - http:
+        path: post/{id}
+        method: put
+        cors: true
+        authorizer: ${file(config/${self:provider.stage}-env.yml):authorizer}
+        documentation:
+          description: Update post by id (for admin only).
+          tags:
+            - SKELETON_Post

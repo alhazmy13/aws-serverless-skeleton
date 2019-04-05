@@ -1,0 +1,11 @@
+trigger_dynamo_to_es:
+  handler: lambda_functions/triggers/es.dynamo_to_es
+  role: DynamoDbToEsRule
+  events:
+    - stream:
+        type: dynamodb
+        arn:
+          Fn::GetAtt:
+            - PostDynamoDbTable
+            - StreamArn
+        batchSize: 100

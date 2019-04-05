@@ -1,0 +1,10 @@
+pynamodb
+python-jose
+elasticsearch-dsl
+requests
+pyyaml
+boto3==1.9.91
+botocore==1.12.91
+aws-requests-auth
+openpyxl
+validators

@@ -1,0 +1,14 @@
+Resources:
+  ElasticSearchInstance:
+    Type: AWS::Elasticsearch::Domain
+    Properties:
+      EBSOptions:
+        EBSEnabled: true
+        VolumeType: gp2
+        VolumeSize: 10
+      ElasticsearchClusterConfig:
+        InstanceType: ${self:custom.es.ElasticsearchClusterConfig.InstanceType, 'm4.large.elasticsearch'}
+        InstanceCount:  ${self:custom.es.ElasticsearchClusterConfig.InstanceCount, '1'}
+        DedicatedMasterEnabled: false
+        ZoneAwarenessEnabled: false
+      ElasticsearchVersion: 5.5

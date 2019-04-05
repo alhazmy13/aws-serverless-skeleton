@@ -1,0 +1,45 @@
+environment:
+  DYNAMODB_POST_TABLE: "${self:service}-${self:provider.stage}-post"
+  DYNAMODB_USER_TABLE: "${self:service}-${self:provider.stage}-user"
+  POOL_ARN: "POOL_ARN"
+  REGION: ${self:provider.region}
+  STAGE: ${self:provider.stage}
+  ES_ENDPOINT:
+    Fn::GetAtt: [ ElasticSearchInstance , DomainEndpoint ]
+  S3_UPLOAD_BUCKET: ${self:custom.s3_upload.bucket}
+  S3_UPLOAD_URL_DEFAULT_TTL: ${self:custom.s3_upload.url_default_ttl}
+  S3_RULE: "${self:service}-${self:provider.stage}-DynamoDbToEsRule"
+  VPC_SECURITY_GROUP: "VPC_SECURITY_GROUP"
+  VPC_SUBNET_PUBLIC_1: "VPC_SUBNET_PUBLIC_1"
+  VPC_SUBNET_PUBLIC_2: "VPC_SUBNET_PUBLIC_2"
+  CLOUDWATCH_NAMESPACE: "skeleton/${self:provider.stage}"
+
+custom:
+  documentation: ${file(config/resource/documentation.yml):documentation}
+  s3_upload:
+    bucket: "${self:service}-${self:provider.stage}-upload"
+    url_default_ttl: "300"
+  dynamodb:
+    DYNAMODB_POST_TABLE:
+      ReadCapacityUnits: 0
+      WriteCapacityUnits: 0
+      BillingMode: PAY_PER_REQUEST
+      PointInTimeRecoveryEnabled: true
+    DYNAMODB_USER_TABLE:
+      ReadCapacityUnits: 0
+      WriteCapacityUnits: 0
+      BillingMode: PAY_PER_REQUEST
+      PointInTimeRecoveryEnabled: true
+  es:
+    ElasticsearchClusterConfig:
+      InstanceType: m4.large.elasticsearch
+      InstanceCount: 1
+  pythonRequirements:
+    dockerizePip: true
+    fileName: requirements.txt
+
+functions: ${file(config/resource/functions.yml):functions}
+
+authorizer:
+  name: authorizer
+  arn: ${self:provider.environment.POOL_ARN}
