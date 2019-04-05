@@ -48,7 +48,6 @@ class JwtValidator(object):
 
 class Groups(Enum):
     ADMIN = "admin"
-    INTERNAL = "internal"
 
     @classmethod
     def verify(cls, other):
