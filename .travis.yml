@@ -1,0 +1,19 @@
+language: python
+node_js: '9.4'
+python:
+- '3.6'
+install:
+- pip install tox-travis
+script:
+- tox
+sudo: false
+before_script:
+- npm install -g serverless@1.35.1
+- npm install
+- npm run dynamo-install
+- npm run elasticsearch-install
+- sleep 5
+- npm run start &
+- sleep 5
+- npm run elasticsearch-start-seed
+- sleep 3
