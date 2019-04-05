@@ -24,6 +24,29 @@
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io#https://github.com/alhazmy13/aws-serverless-skeleton)
 
+## Contents
+
+* [Requirements]
+* [Installing]
+* [Setup AWS]
+* [Deploy to AWS]
+* [Run it locally]
+* [Trying the service with Postman]
+* [Testing]
+* [Structure]
+  + [Configuration]
+  + [Seeds]
+  + [Lambda Function]
+  + [App Service]
+    + [DynamoDB]
+    + [Elastic Search]
+    + [S3]
+  + [Common Files]
+  + [Script]
+  + [Tests]
+  + [Other Files]
+
+
 ## Requirements
 
 * `python` (Python 3.x)
@@ -75,7 +98,7 @@ aws iam list-users --output table
 ```
 if all is well, then you are good to go!
 
-## Deploy on AWS
+## Deploy to AWS
 by simple command from terminal:
 
 ```js
@@ -158,3 +181,52 @@ To install dev requirements and test this project against Python3.6, just type:
 ```
 tox
 ```
+
+## Structure
+
+Working on it.
+ 
+### Configuration
+
+Working on it. 
+
+### Seeds
+
+Working on it. 
+
+### Lambda Function
+
+Working on it. 
+
+### App Service
+
+Working on it. 
+
+#### DynamoDB
+
+Working on it. 
+
+#### Elastic Search
+
+Working on it. 
+
+#### S3
+
+Working on it. 
+
+### Common Files
+
+Working on it. 
+
+### Script
+
+Working on it. 
+
+### Tests
+
+Working on it. 
+
+### Other Files
+
+Working on it. 
+
