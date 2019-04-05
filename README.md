@@ -1,8 +1,11 @@
 
 # Aws Serverless Skeleton 
 
+[![License](https://img.shields.io/badge/license-MIT-green.svg)
 [![Coverage Status](https://coveralls.io/repos/github/alhazmy13/aws-serverless-skeleton/badge.svg?branch=master)](https://coveralls.io/github/alhazmy13/aws-serverless-skeleton?branch=master)
 [![Build Status](https://travis-ci.com/alhazmy13/aws-serverless-skeleton.svg?branch=master)](https://travis-ci.com/alhazmy13/aws-serverless-skeleton)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?longCache=true)](https://github.com/TypeFox/monaco-languageclient/labels/help%20wanted)
+[![Python Versions](https://img.shields.io/badge/python-3.5%20%7C%203.6%20%7C%203.7-blue.svg)
 # Overview
 
 *Aws Serverless Skeleton* is built on top of AWS (Amazon Web Service) using multiple services :
@@ -15,6 +18,10 @@
 * **ES (Elasticsearch Service)**
 * **CloudFormation**
 * **CloudWatch**
+
+*Note*: This project may be edited directly in the browser using the gitpod application which is provides a full blown IDE.
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io#https://github.com/alhazmy13/aws-serverless-skeleton)
 
 ## Requirements
 
