@@ -17,3 +17,5 @@ before_script:
 - sleep 5
 - npm run elasticsearch-start-seed
 - sleep 3
+after_success:
+  - coveralls

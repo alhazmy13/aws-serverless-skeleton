@@ -17,3 +17,4 @@ botocore
 callee
 openpyxl
 validators
+python-coveralls
