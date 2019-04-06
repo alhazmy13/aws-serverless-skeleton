@@ -195,11 +195,12 @@ Please read more about this in [Cognito Section](#cognito)
 
 ### Cognito
 
-In this skeleton, I'm counting on Cognito with Authorization and Authentication process, and there are two methods to apply cognito.
+In this skeleton, We are counting on Cognito with Authorization and Authentication process, and there are two ways to apply cognito.
 
 #### First approach
 
-I prefer to separate cognito in a different stack or do it manually and then append `Pool ARN` to your environment, if you are following this approach then you need to update `POOL_ARN` value in your env file (`dev-env.yml` or `prod-env.yml`) with your user pool ARN like so:
+Separate cognito in a different stack or do it manually and then append `Pool ARN` to your environment.
+if you are following this approach then you need to update `POOL_ARN` value in your env file (`dev-env.yml` or `prod-env.yml`) with your user pool ARN like so:
 
 ```yaml
 environment:
@@ -216,28 +217,20 @@ authorizer:
 
 ```
 
-And after deploying the stack, just go to your user pool and enable `PostConfirmation` trigger with `auth_post` function. 
+After deploying the stack, just go to your user pool and enable `PostConfirmation` trigger with `auth_post` function. 
 
-
+***NOTE*** make sure to remove cognito recourse form `serverless.yml` file.
 
 #### Second approach
 
-You can deploy the user pool resource by appending `${file(config/resource/cognito.yml)}` under `resources` in `serverless.yml` file.
+Deploying the user pool resource within the same stack by appending `${file(config/resource/cognito.yml)}` under `resources` in `serverless.yml` file.
 
 ```yaml
 resources:
   - ${file(config/resource/cognito.yml)}
 ```
 
-After that go to your environment file and update `POOL_ARN` value with:
-
-```yaml
-environment:
-  POOL_ARN:
-    Fn::GetAtt: CognitoUserPool.Arn
-```  
-
-Last step, Go to `lambda_functions/aut/functions.yml` and change:
+Go to `lambda_functions/aut/functions.yml` and change:
 
 ```yaml
 auth_post:
@@ -256,7 +249,7 @@ auth_post:
         trigger: PostConfirmation
  ```
 
-And in your env file just change the `authorizer` to :
+In your env file just change the `authorizer` to :
 
 ```yaml
 authorizer:
