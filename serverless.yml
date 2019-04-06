@@ -54,6 +54,7 @@ provider:
         - ${self:provider.environment.VPC_SUBNET_PUBLIC_2}
 
 resources:
+  - ${file(config/resource/cognito.yml)}
   - ${file(config/resource/dynamodb.yml)}
   - ${file(config/resource/es.yml)}
   - ${file(config/resource/rules.yml)}

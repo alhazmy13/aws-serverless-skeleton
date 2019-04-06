@@ -35,6 +35,10 @@
 * [Testing](#testing)
 * [Structure](#structure)
   + [Configuration](#configuration)
+    + [Authorization](#authorization)
+        + [Over lambda function](#over_lambda_function)
+        + [Over Cognito](#over_cognito)
+    + [Cognito](#cognito)
   + [Seeds](#seeds)
   + [Lambda Function](#lambda-function)
   + [App Service](#app-service)
@@ -188,7 +192,96 @@ Working on it.
  
 ### Configuration
 
-Working on it. 
+You will find a folder `config` that have a separate file for each environment (`dev`, `prod` and `local`) each file has 
+* `environment` for environment values like DynamoDB table names or elastic search endpoint.
+* `custom` to modify and update the resource configuration, for example from `custom` you can change the elastic search instance type.
+* `functions` for a list of lambda function to deploy in environment.
+* `authorizer` For more information please [read this section](#authorization)  
+
+`resourse` folder that contains a bunch of files to deploy the required resources in the `CloudFormation` stack, you can enable or disable any resource from `serverless.yml` file.    
+
+#### Authorizer
+
+##### Over lambda function
+
+We have a dummy function `AuthorizerService` to authorize the request, you can update it with any authorizer you like.
+ 
+For this approach, you need to append below code in your env (`dev-env.yml` or `prod-env.yml`) file.
+
+```yaml
+authorizer:
+  name: auth_authorizer
+  resultTtlInSeconds: 0
+  type: token
+```
+
+##### Over Cognito
+
+Please read more about this in [Cognito Section](#cognito)
+
+For this approach, you need to append below code in your env (`dev-env.yml` or `prod-env.yml`) file.
+
+```yaml
+authorizer:
+  name: authorizer
+  arn: ${self:provider.environment.POOL_ARN}
+
+```
+
+#### Cognito
+
+In this skeleton, I'm counting on Cognito with Authorization and Authentication process, and there are two methods to apply cognito.
+
+##### First approach
+
+I prefer to separate cognito in a different stack or do it manually and then append `Pool ARN` to your environment, if you are following this approach then you need to update `POOL_ARN` value in your env file (`dev-env.yml` or `prod-env.yml`) with your user pool ARN like so:
+
+```yaml
+environment:
+  POOL_ARN: 'arn:aws:cognito-idp:{REGION}:{ACCOUNT_NUMBER}:userpool/{REGION}_{USER_POOL_ID}'
+
+```  
+
+And after deploying the stack, just go to your user pool and enable `PostConfirmation` trigger with `auth_post` function. 
+
+
+
+##### Second approach
+
+You can deploy the user pool resource by appending `${file(config/resource/cognito.yml)}` under `resources` in `serverless.yml` file.
+
+```yaml
+resources:
+  - ${file(config/resource/cognito.yml)}
+  - ${file(config/resource/dynamodb.yml)}
+```
+
+After that go to your environment file and update `POOL_ARN` value with:
+
+```yaml
+environment:
+  POOL_ARN:
+    Fn::GetAtt: CognitoUserPool.Arn
+```  
+
+Last step, Go to `lambda_functions/aut/functions.yml` and change:
+
+```yaml
+auth_post:
+  handler: lambda_functions/auth/auth.post_auth
+```
+
+To:
+
+```yaml
+auth_post:
+  handler: lambda_functions/auth/auth.post_auth
+  events:
+    - cognitoUserPool:
+        pool:
+          Ref: CognitoUserPool
+        trigger: PostConfirmation
+ ```
 
 ### Seeds
 
@@ -201,6 +294,8 @@ Working on it.
 ### App Service
 
 Working on it. 
+
+
 
 #### DynamoDB
 

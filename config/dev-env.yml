@@ -1,7 +1,8 @@
 environment:
   DYNAMODB_POST_TABLE: "${self:service}-${self:provider.stage}-post"
   DYNAMODB_USER_TABLE: "${self:service}-${self:provider.stage}-user"
-  POOL_ARN: "POOL_ARN"
+  POOL_ARN:
+    Fn::GetAtt: CognitoUserPool.Arn
   REGION: ${self:provider.region}
   STAGE: ${self:provider.stage}
   ES_ENDPOINT:
@@ -32,7 +33,7 @@ custom:
       PointInTimeRecoveryEnabled: false
   es:
     ElasticsearchClusterConfig:
-      InstanceType: m2.micro.elasticsearch
+      InstanceType: t2.small.elasticsearch
       InstanceCount: 1
   pythonRequirements:
     dockerizePip: true
