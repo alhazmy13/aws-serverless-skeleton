@@ -1,4 +1,88 @@
 Resources:
+  DynamoDbToEsRule:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: ${self:provider.environment.S3_RULE}
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: LambdaBasicExecutionRole
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: '*'
+        - PolicyName: InvokeFunction
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - lambda:InvokeFunction
+                  - lambda:InvokeAsync
+                Resource: '*'
+        - PolicyName: AccessToDynamoDb
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - dynamodb:DescribeTable
+                  - dynamodb:Scan
+                Resource:
+                  - Fn::GetAtt: [ PostDynamoDbTable , Arn ]
+        - PolicyName: LambdaToAmazonEs
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - es:ESHttpPost
+                Resource:
+                  - 'Fn::Join':
+                      - ':'
+                      - - 'arn:aws:es'
+                        - Ref: 'AWS::Region'
+                        - Ref: 'AWS::AccountId'
+                        - 'Fn::Join':
+                            - '/'
+                            - - 'domain'
+                              - Ref: "ElasticSearchInstance"
+                              - '*'
+        - PolicyName: AccessToDynamoStream
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - dynamodb:DescribeStream
+                  - dynamodb:GetRecords
+                  - dynamodb:GetShardIterator
+                  - dynamodb:ListStreams
+                Resource:
+                  - Fn::GetAtt: [ PostDynamoDbTable , StreamArn ]
+
+        - PolicyName: UpdateEc2NetworkInterface
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - ec2:CreateNetworkInterface
+                  - ec2:DescribeNetworkInterfaces
+                  - ec2:DetachNetworkInterface
+                  - ec2:DeleteNetworkInterface
+                Resource: "*"
   ElasticSearchInstance:
     Type: AWS::Elasticsearch::Domain
     Properties:

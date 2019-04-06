@@ -1,8 +1,4 @@
 auth_post:
   handler: lambda_functions/auth/auth.post_auth
-  events:
-    - cognitoUserPool:
-        pool: CognitoUserPool
-        trigger: PostConfirmation
 auth_authorizer:
   handler: lambda_functions/auth/auth.authorizer

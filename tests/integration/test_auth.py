@@ -1,5 +1,6 @@
 import copy
 import unittest
+import uuid
 
 from src.app.auth.authorizer import AuthorizerService
 from src.app.auth.model import UserModel
@@ -13,8 +14,11 @@ class PostServiceTestCase(unittest.TestCase):
         self.user_sub = '9929942b-a90b-443d-96bf-19393615f6d7'
 
     def test_post_service_should_create_new_row_for_user(self):
-        PostAuthService(event=self.event).execute()
-        user = UserModel.get(self.user_sub)
+        random_sub = str(uuid.uuid4())
+        event = copy.deepcopy(self.event)
+        event['request']['userAttributes']['sub'] = random_sub
+        PostAuthService(event=event).execute()
+        user = UserModel.get(random_sub)
         self.assertIsNotNone(user)
 
     def test_post_service_should_not_throw_exception_with_none_values(self):

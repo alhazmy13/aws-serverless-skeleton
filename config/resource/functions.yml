@@ -6,4 +6,3 @@ functions:
   # post_update: ${file(lambda_functions/post/functions.yml):post_update}
   auth_post: ${file(lambda_functions/auth/functions.yml):auth_post}
   auth_authorizer: ${file(lambda_functions/auth/functions.yml):auth_authorizer}
-  trigger_dynamo_to_es: ${file(lambda_functions/triggers/functions.yml):trigger_dynamo_to_es}

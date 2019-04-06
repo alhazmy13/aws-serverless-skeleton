@@ -46,17 +46,10 @@ provider:
   stage: ${opt:stage, 'local'}
   environment: ${file(config/${self:provider.stage}-env.yml):environment}
   iamRoleStatements: ${file(config/resource/iam_policies.yml):iamRoleStatements}
-  vpc:
-      securityGroupIds:
-        - ${self:provider.environment.VPC_SECURITY_GROUP}
-      subnetIds:
-        - ${self:provider.environment.VPC_SUBNET_PUBLIC_1}
-        - ${self:provider.environment.VPC_SUBNET_PUBLIC_2}
 
 resources:
   - ${file(config/resource/cognito.yml)}
   - ${file(config/resource/dynamodb.yml)}
-  - ${file(config/resource/es.yml)}
   - ${file(config/resource/rules.yml)}
   - ${file(config/resource/s3.yml)}
   - ${file(config/resource/validators.yml)}

@@ -1,3 +1,4 @@
+from test.support import EnvironmentVarGuard
 import unittest
 
 from src.common.event_validator import EventValidator
@@ -57,3 +58,20 @@ class TestEventValidator(unittest.TestCase):
 
         # then
         self.assertEqual(result, 'SUB')
+
+
+class TestEventValidatorForOffline(unittest.TestCase):
+
+    def test_jwt_validator_with_offline(self):
+        # given
+        env = EnvironmentVarGuard()
+        with env:
+            env.set('IS_OFFLINE', 'any value')
+            env.set('LOCAL_USER_ID', 'any user')
+
+            # when
+            validator = EventValidator()
+            response = validator.get_user_sub_from_event({})
+
+            # then
+            self.assertEqual(response, 'any user')

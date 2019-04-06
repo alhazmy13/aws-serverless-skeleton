@@ -15,14 +15,6 @@ class JwtValidator(object):
         return authorization
 
     @classmethod
-    def get_client_id_from_id_token(cls, event):
-        """ Pulls the audience (client id) out of an id_token
-        """
-        token = cls.get_token_from_event(event)
-        payload = jwt.get_unverified_claims(token)
-        return payload.get('aud')
-
-    @classmethod
     def get_user_group_from_id_token(cls, event):
         # Workaround until we found a solution to deploy cognito locally
         if os.environ.get('IS_OFFLINE') is not None:

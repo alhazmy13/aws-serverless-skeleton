@@ -70,7 +70,7 @@ class PostGetServiceTestCase(unittest.TestCase):
 
     def test_get_service_return_404(self):
         # given
-        path_param = 'blah_'
+        path_param = 'path parm'
         user_group = ''
 
         # when

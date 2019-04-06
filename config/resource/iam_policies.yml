@@ -28,18 +28,18 @@ iamRoleStatements:
         - s3:PutObject
       Resource:
         Fn::GetAtt: [ S3BucketUpload , Arn ]
-    - Effect: Allow
-      Action: es:ESHttpGet
-      Resource:
-        - 'Fn::Join':
-          - ':'
-          -
-            - 'arn:aws:es'
-            - Ref: 'AWS::Region'
-            - Ref: 'AWS::AccountId'
-            - 'Fn::Join':
-              - '/'
-              -
-                - 'domain'
-                - Ref: "ElasticSearchInstance"
-                - '*'
+#    - Effect: Allow
+#      Action: es:ESHttpGet
+#      Resource:
+#        - 'Fn::Join':
+#          - ':'
+#          -
+#            - 'arn:aws:es'
+#            - Ref: 'AWS::Region'
+#            - Ref: 'AWS::AccountId'
+#            - 'Fn::Join':
+#              - '/'
+#              -
+#                - 'domain'
+#                - Ref: "ElasticSearchInstance"
+#                - '*'

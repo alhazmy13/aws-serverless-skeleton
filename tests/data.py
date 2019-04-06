@@ -37,8 +37,8 @@ MOCK_Custom_authorizer = {
     'type': 'TOKEN',
     'methodArn': 'arn:aws:execute-api:eu-west-1:000000000000:randomkey/dev/GET/function',
     'authorizationToken':
-        'eyJraWQiOiJlQ2t2OVJLeHYzTVVDZWpySlRmNVIrdGxuY3hLRW1NcG9WZnpZREZHS3FBPSIsImFsZyI6'
-        'IlJTMjU2In0.'
-        'eyJzdWIiOiI5OTI5OTQyYi1hOTBiLTQ0M2QtOTZiZi0xOTM5MzYxNWY2ZDcifQ.'
-        'HXlYOeO8tBw-Zrrdl_DH8Ixbqos9Q_S5pronrXxlX44'
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5OTI5OTQyYi1hOTBiLTQ0M'
+        '2QtOTZiZi0xOTM5MzYxNWY2ZDciLCJjb2duaXRvOmdyb3VwcyI6W10sImNvZ25pdG86dXNlcm5hbWUiOiJ'
+        'VU0VSTkFNRSIsImF1ZCI6IkFVRF9OVU1CRVIiLCJuYW1lIjoiVXNlciJ9.opOkjGvHQ'
+        'RlJ-VyNP-bfTOlu_-lHmBUjzeBe8XfkoD0'
 }

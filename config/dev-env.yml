@@ -5,8 +5,8 @@ environment:
     Fn::GetAtt: CognitoUserPool.Arn
   REGION: ${self:provider.region}
   STAGE: ${self:provider.stage}
-  ES_ENDPOINT:
-    Fn::GetAtt: [ ElasticSearchInstance , DomainEndpoint ]
+#  ES_ENDPOINT:
+#    Fn::GetAtt: [ ElasticSearchInstance , DomainEndpoint ]
   S3_UPLOAD_BUCKET: ${self:custom.s3_upload.bucket}
   S3_UPLOAD_URL_DEFAULT_TTL: ${self:custom.s3_upload.url_default_ttl}
   S3_RULE: "${self:service}-${self:provider.stage}-DynamoDbToEsRule"

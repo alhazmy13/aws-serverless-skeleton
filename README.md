@@ -293,8 +293,7 @@ provider:
 
 ## Structure
 
-In this skeleton, you will find that we separate the lambda function handler from the business logic itself, for two many reasons. 
-So, We have two folders you can play with it. 
+In this skeleton, you will find that we separate the lambda function handler from the business logic itself, for too many reasons.
 
 ### Lambda Function
 
