@@ -135,6 +135,7 @@ node_modules
 
 #IDE Stuff
 **/.idea
+.idea/
 
 #OS STUFF
 .DS_Store

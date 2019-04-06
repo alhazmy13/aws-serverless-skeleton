@@ -301,7 +301,7 @@ You need to install `tox` tool:
 pip install -r requirements-dev.txt
 ```
 
-Make sure the dynamoDb-local is ruining on your device:
+Make sure all the services are ruining on your device:
 
 ```
 npm run start
