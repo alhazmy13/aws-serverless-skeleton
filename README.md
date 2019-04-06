@@ -41,6 +41,7 @@
     + [DynamoDB](#dynamodb)
     + [ElasticSearch](#elastic-search)
     + [S3](#s3)
+    + [VPC](#vpc)
 * [Structure](#structure)
   + [Lambda Function](#lambda-function)
   + [App Service](#app-service)
@@ -267,6 +268,28 @@ Working on it.
 
 Working on it.  
 
+### VPC
+
+We assume that you already you have a VPC with in your AWS region, so there's no recourse to deploy a VPC with in the same stack however to deploy the lambda functions into a non-default VPC you need to update three values in (`dev-env.yml` or `prod-env.yml`) file.
+
+```yaml
+environment:
+  VPC_SECURITY_GROUP: "VPC_SECURITY_GROUP"
+  VPC_SUBNET_PUBLIC_1: "VPC_SUBNET_PUBLIC_1"
+  VPC_SUBNET_PUBLIC_2: "VPC_SUBNET_PUBLIC_2"
+```
+
+**NOTE** to deploy the lambda functions with default VPC just remove `vpc` value from `serverless.yml` file.
+
+```yaml
+provider:
+  vpc:
+      securityGroupIds:
+        - ${self:provider.environment.VPC_SECURITY_GROUP}
+      subnetIds:
+        - ${self:provider.environment.VPC_SUBNET_PUBLIC_1}
+        - ${self:provider.environment.VPC_SUBNET_PUBLIC_2}
+```  
 
 ## Structure
 
