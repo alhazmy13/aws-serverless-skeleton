@@ -35,8 +35,8 @@
 * [Trying the service with Postman](#trying-the-service-with-postman)
 * [Configuration](#configuration)
     + [Authorization](#authorization)
-        + [Over lambda function](#over_lambda_function)
-        + [Over Cognito](#over_cognito)
+        + [Over lambda function](#over-lambda-function)
+        + [Over Cognito](#over-cognito)
     + [Cognito](#cognito)
     + [DynamoDB](#dynamodb)
     + [ElasticSearch](#elastic-search)
@@ -155,7 +155,7 @@ By default you can send your requests to ```http://localhost:3000/``` or ```http
 To install Postman, go to the apps page and click Download for Mac / Windows / Linux depending on your platform.
 [Download](https://www.getpostman.com/docs/postman/launching_postman/installation_and_updates)
 
-after downloading *Postman* you need to add the collection of endpoint of the services to be called from [collections](https://github.com/alhazmy13/aws-serverless-skeleton/blob/master/postman/aws-serverless-skeleton.postman_collection.json)
+after downloading *Postman* you need to add the collection of endpoint of the services to be called from [collections](https://raw.githubusercontent.com/alhazmy13/aws-serverless-skeleton/master/postman/aws-serverless-skeleton.postman_collection.json)
 
 1. from import button, choose import from url and paste the url above. 
 2. right click on the collection "posts", choose edit, and then choose variables tab.
@@ -173,7 +173,7 @@ You will find a folder `config` that have a separate file for each environment (
 
 `resourse` folder that contains a bunch of files to deploy the required resources in the `CloudFormation` stack, you can enable or disable any resource from `serverless.yml` file.    
 
-### Authorizer
+### Authorization
 
 #### Over lambda function
 
