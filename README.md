@@ -155,7 +155,7 @@ By default you can send your requests to ```http://localhost:3000/``` or ```http
 To install Postman, go to the apps page and click Download for Mac / Windows / Linux depending on your platform.
 [Download](https://www.getpostman.com/docs/postman/launching_postman/installation_and_updates)
 
-after downloading *Postman* you need to add the collection of endpoint of the services to be called from [collections](https://www.getpostman.com/collections/c53ce0788ad98e7b1033)
+after downloading *Postman* you need to add the collection of endpoint of the services to be called from [collections](https://github.com/alhazmy13/aws-serverless-skeleton/blob/master/postman/aws-serverless-skeleton.postman_collection.json)
 
 1. from import button, choose import from url and paste the url above. 
 2. right click on the collection "posts", choose edit, and then choose variables tab.
