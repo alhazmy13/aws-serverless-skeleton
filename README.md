@@ -16,6 +16,7 @@
 * **DynamoDB Streams**
 * **S3**
 * **Lambda**
+* **Cognito**
 * **ES (Elasticsearch Service)**
 * **CloudFormation**
 * **CloudWatch**
@@ -32,23 +33,19 @@
 * [Deploy to AWS](#deploy-to-aws)
 * [Run it locally](#run-it-locally)
 * [Trying the service with Postman](#trying-the-service-with-postman)
-* [Testing](#testing)
-* [Structure](#structure)
-  + [Configuration](#configuration)
+* [Configuration](#configuration)
     + [Authorization](#authorization)
         + [Over lambda function](#over_lambda_function)
         + [Over Cognito](#over_cognito)
     + [Cognito](#cognito)
-  + [Seeds](#seeds)
+    + [DynamoDB](#dynamodb)
+    + [ElasticSearch](#elastic-search)
+    + [S3](#s3)
+* [Structure](#structure)
   + [Lambda Function](#lambda-function)
   + [App Service](#app-service)
-    + [DynamoDB](#dynamodb)
-    + [Elastic Search](#elastic-search)
-    + [S3](#s3)
-  + [Common Files](#common-files)
-  + [Script](#script)
-  + [Tests](#tests)
-  + [Other Files](#other-files)
+* [Seeds](#seeds)
+* [Testing](#testing)
 
 
 ## Requirements
@@ -164,33 +161,8 @@ after downloading *Postman* you need to add the collection of endpoint of the se
 3. add key = BASE_URL and value is either: *YOUR_BASE_URL* or [local](http://localhost:3000/)
 4. to run any of the requests, just select it and hit run ( to test, choose post and then "get all posts" )
 
-## Testing
-
-The project contains a set of unit and integration tests but before all make sure you follow this [instruction](#installing) before run test commands.
-
-You need to install `tox` tool:
-
-```
-pip install -r requirements-dev.txt
-```
-
-Make sure the dynamoDb-local is ruining on your device:
-
-```
-npm run start
-```
-
-To install dev requirements and test this project against Python3.6, just type: 
  
-```
-tox
-```
-
-## Structure
-
-Working on it.
- 
-### Configuration
+## Configuration
 
 You will find a folder `config` that have a separate file for each environment (`dev`, `prod` and `local`) each file has 
 * `environment` for environment values like DynamoDB table names or elastic search endpoint.
@@ -200,9 +172,9 @@ You will find a folder `config` that have a separate file for each environment (
 
 `resourse` folder that contains a bunch of files to deploy the required resources in the `CloudFormation` stack, you can enable or disable any resource from `serverless.yml` file.    
 
-#### Authorizer
+### Authorizer
 
-##### Over lambda function
+#### Over lambda function
 
 We have a dummy function `AuthorizerService` to authorize the request, you can update it with any authorizer you like.
  
@@ -215,7 +187,7 @@ authorizer:
   type: token
 ```
 
-##### Over Cognito
+#### Over Cognito
 
 Please read more about this in [Cognito Section](#cognito)
 
@@ -228,11 +200,11 @@ authorizer:
 
 ```
 
-#### Cognito
+### Cognito
 
 In this skeleton, I'm counting on Cognito with Authorization and Authentication process, and there are two methods to apply cognito.
 
-##### First approach
+#### First approach
 
 I prefer to separate cognito in a different stack or do it manually and then append `Pool ARN` to your environment, if you are following this approach then you need to update `POOL_ARN` value in your env file (`dev-env.yml` or `prod-env.yml`) with your user pool ARN like so:
 
@@ -246,7 +218,7 @@ And after deploying the stack, just go to your user pool and enable `PostConfirm
 
 
 
-##### Second approach
+#### Second approach
 
 You can deploy the user pool resource by appending `${file(config/resource/cognito.yml)}` under `resources` in `serverless.yml` file.
 
@@ -283,45 +255,60 @@ auth_post:
         trigger: PostConfirmation
  ```
 
-### Seeds
+### DynamoDB
 
 Working on it. 
+
+### Elastic Search
+
+Working on it. 
+
+### S3
+
+Working on it.  
+
+
+## Structure
+
+In this skeleton, you will find that we separate the lambda function handler from the business logic itself, for two many reasons. 
+So, We have two folders you can play with it. 
 
 ### Lambda Function
 
-Working on it. 
+It contains a list of folders, each folder for only one route and each folder contains only two files.
+
+* `route_name.py` with a list of lambda function handler that returns the service response.
+* `functions.yml` with a list of lambda function recourse name and the configuration for each function, for example `events` type, `http` method or the `path` for the route.   
 
 ### App Service
 
-Working on it. 
+This folder (`src`) contains all our business logic
+* `app package` has a list of packages, each package has the name for the route with a list of services that represent our `CRUD` and `model` class
+* `common` contains a list of helper classes.
+
+## Seeds
+
+we inject some seed data into our tables with local env, this helped us with test our application, to change the data just update any `json` file from `seed` folder.
 
 
+## Testing
 
-#### DynamoDB
+The project contains a set of unit and integration tests but before all make sure you follow this [instruction](#installing) before run test commands.
 
-Working on it. 
+You need to install `tox` tool:
 
-#### Elastic Search
+```
+pip install -r requirements-dev.txt
+```
 
-Working on it. 
+Make sure the dynamoDb-local is ruining on your device:
 
-#### S3
+```
+npm run start
+```
 
-Working on it. 
-
-### Common Files
-
-Working on it. 
-
-### Script
-
-Working on it. 
-
-### Tests
-
-Working on it. 
-
-### Other Files
-
-Working on it. 
-
+To install dev requirements and test this project against Python3.6, just type: 
+ 
+```
+tox
+```
