@@ -2,7 +2,7 @@ Resources:
   DynamoDbToEsRule:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: ${self:provider.environment.S3_RULE}
+      RoleName: "${self:service}-${self:provider.stage}-DynamoDbToEsRule"
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
@@ -71,18 +71,6 @@ Resources:
                   - dynamodb:ListStreams
                 Resource:
                   - Fn::GetAtt: [ PostDynamoDbTable , StreamArn ]
-
-        - PolicyName: UpdateEc2NetworkInterface
-          PolicyDocument:
-            Version: "2012-10-17"
-            Statement:
-              - Effect: Allow
-                Action:
-                  - ec2:CreateNetworkInterface
-                  - ec2:DescribeNetworkInterfaces
-                  - ec2:DetachNetworkInterface
-                  - ec2:DeleteNetworkInterface
-                Resource: "*"
   ElasticSearchInstance:
     Type: AWS::Elasticsearch::Domain
     Properties:

@@ -192,14 +192,6 @@ authorizer:
 
 Please read more about this in [Cognito Section](#cognito)
 
-For this approach, you need to append below code in your env (`dev-env.yml` or `prod-env.yml`) file.
-
-```yaml
-authorizer:
-  name: authorizer
-  arn: ${self:provider.environment.POOL_ARN}
-
-```
 
 ### Cognito
 
@@ -215,6 +207,15 @@ environment:
 
 ```  
 
+And in your env file just change the `authorizer` to :
+
+```yaml
+authorizer:
+  name: authorizer
+  arn: ${self:provider.environment.POOL_ARN}
+
+```
+
 And after deploying the stack, just go to your user pool and enable `PostConfirmation` trigger with `auth_post` function. 
 
 
@@ -226,7 +227,6 @@ You can deploy the user pool resource by appending `${file(config/resource/cogni
 ```yaml
 resources:
   - ${file(config/resource/cognito.yml)}
-  - ${file(config/resource/dynamodb.yml)}
 ```
 
 After that go to your environment file and update `POOL_ARN` value with:
@@ -255,6 +255,15 @@ auth_post:
           Ref: CognitoUserPool
         trigger: PostConfirmation
  ```
+
+And in your env file just change the `authorizer` to :
+
+```yaml
+authorizer:
+  type: COGNITO_USER_POOLS
+  authorizerId:
+    Ref: ApiGatewayAuthorizer
+```
 
 ### DynamoDB
 

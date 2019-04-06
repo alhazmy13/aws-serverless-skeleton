@@ -2,7 +2,7 @@ Resources:
   S3Rule:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: ${self:provider.environment.S3_RULE}
+      RoleName: "${self:service}-${self:provider.stage}-S3_RULE"
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:

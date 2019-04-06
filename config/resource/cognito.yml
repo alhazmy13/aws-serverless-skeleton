@@ -19,6 +19,18 @@ Resources:
               - Effect: "Allow"
                 Action: "sns:publish"
                 Resource: "*"
+  ApiGatewayAuthorizer:
+    Type: AWS::ApiGateway::Authorizer
+    Properties:
+      Name: CognitoUserPool
+      Type: COGNITO_USER_POOLS
+      IdentitySource: method.request.header.Authorization
+      RestApiId:
+        Ref: ApiGatewayRestApi
+      ProviderARNs:
+        - Fn::GetAtt:
+            - CognitoUserPool
+            - Arn
   CognitoUserPool:
     Type: AWS::Cognito::UserPool
     Properties:

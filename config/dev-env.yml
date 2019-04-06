@@ -9,7 +9,6 @@ environment:
 #    Fn::GetAtt: [ ElasticSearchInstance , DomainEndpoint ]
   S3_UPLOAD_BUCKET: ${self:custom.s3_upload.bucket}
   S3_UPLOAD_URL_DEFAULT_TTL: ${self:custom.s3_upload.url_default_ttl}
-  S3_RULE: "${self:service}-${self:provider.stage}-DynamoDbToEsRule"
   VPC_SECURITY_GROUP: "VPC_SECURITY_GROUP"
   VPC_SUBNET_PUBLIC_1: "VPC_SUBNET_PUBLIC_1"
   VPC_SUBNET_PUBLIC_2: "VPC_SUBNET_PUBLIC_2"
@@ -42,5 +41,6 @@ custom:
 functions: ${file(config/resource/functions.yml):functions}
 
 authorizer:
-  name: authorizer
-  arn: ${self:provider.environment.POOL_ARN}
+  type: COGNITO_USER_POOLS
+  authorizerId:
+    Ref: ApiGatewayAuthorizer
