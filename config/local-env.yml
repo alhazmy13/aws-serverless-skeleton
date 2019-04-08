@@ -1,6 +1,7 @@
 environment:
   DYNAMODB_POST_TABLE: "${self:service}-${self:provider.stage}-post"
   DYNAMODB_USER_TABLE: "${self:service}-${self:provider.stage}-user"
+  DYNAMODB_UPLOAD_TABLE: "${self:service}-${self:provider.stage}-upload"
   DYNAMODB_HOST: "http://localhost:8000"
   REGION: ${self:provider.region}
   STAGE: ${self:provider.stage}

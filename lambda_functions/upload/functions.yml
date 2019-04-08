@@ -1,0 +1,24 @@
+upload_create:
+  handler: lambda_functions/upload/upload.create
+  description: Generate a presigned URL for PUT upload
+  events:
+  - http:
+      path: upload
+      method: post
+      cors: true
+      authorizer: ${file(config/${self:provider.stage}-env.yml):authorizer}
+
+trigger_upload_bucket:
+  handler: lambda_functions/upload/upload.bucket
+  description: Called by s3 create/remove events to manage asset state in dynamo
+  events:
+  - existingS3:
+      bucket: ${self:custom.s3_upload.bucket}
+      events:
+      - s3:ObjectCreated:*
+      - s3:ObjectRemoved:*
+      rules:
+      - name:  suffix
+        value:  .jpg
+      - name:  suffix
+        value: .png
