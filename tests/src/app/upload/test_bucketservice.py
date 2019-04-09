@@ -3,6 +3,7 @@ import unittest
 from unittest.mock import MagicMock, patch
 
 from src.app.upload.bucket import BucketTriggerService
+from src.app.upload.model import AssetModel
 
 
 class TestBucketService(unittest.TestCase):
@@ -11,10 +12,9 @@ class TestBucketService(unittest.TestCase):
     @patch('src.app.post.create.ExceptionHandler')
     def test_trigger_with_created_event(self, mock_exception_handler, mock_upload_model):
         # given
-        mock_upload = MagicMock(spec=mock_upload_model)
+        upload_obj = AssetModel()
+        mock_upload = MagicMock(spec=upload_obj)
         mock_upload.id = "any_id"
-        mock_upload.mark_received = MagicMock(return_value=mock_upload)
-        mock_upload.mark_deleted = MagicMock(return_value=mock_upload)
 
         mock_upload_model.get = MagicMock(return_value=mock_upload)
 
@@ -34,10 +34,9 @@ class TestBucketService(unittest.TestCase):
     @patch('src.app.post.create.ExceptionHandler')
     def test_trigger_with_delete_event(self, mock_exception_handler, mock_upload_model):
         # given
-        mock_upload = MagicMock(spec=mock_upload_model)
+        upload_obj = AssetModel()
+        mock_upload = MagicMock(spec=upload_obj)
         mock_upload.id = "any_id"
-        mock_upload.mark_received = MagicMock(return_value=mock_upload)
-        mock_upload.mark_deleted = MagicMock(return_value=mock_upload)
 
         mock_upload_model.get = MagicMock(return_value=mock_upload)
 
