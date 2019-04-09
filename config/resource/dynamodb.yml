@@ -39,3 +39,22 @@ Resources:
         PointInTimeRecoveryEnabled: ${self:custom.dynamodb.DYNAMODB_USER_TABLE.PointInTimeRecoveryEnabled, 'false'}
       BillingMode: ${self:custom.dynamodb.DYNAMODB_USER_TABLE.BillingMode, 'PROVISIONED'}
       TableName: ${self:provider.environment.DYNAMODB_USER_TABLE}
+  UploadDynamoDbTable:
+    Type: 'AWS::DynamoDB::Table'
+    DeletionPolicy: Retain
+    Properties:
+      AttributeDefinitions:
+        -
+          AttributeName: id
+          AttributeType: S
+      KeySchema:
+        -
+          AttributeName: id
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: ${self:custom.dynamodb.DYNAMODB_UPLOAD_TABLE.ReadCapacityUnits, '1'}
+        WriteCapacityUnits: ${self:custom.dynamodb.DYNAMODB_UPLOAD_TABLE.WriteCapacityUnits, '1'}
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: ${self:custom.dynamodb.DYNAMODB_UPLOAD_TABLE.PointInTimeRecoveryEnabled, 'false'}
+      BillingMode: ${self:custom.dynamodb.DYNAMODB_UPLOAD_TABLE.BillingMode, 'PROVISIONED'}
+      TableName: ${self:provider.environment.DYNAMODB_UPLOAD_TABLE}

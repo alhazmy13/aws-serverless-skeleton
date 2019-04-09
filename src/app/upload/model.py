@@ -1,6 +1,8 @@
 from datetime import datetime
 from enum import Enum
 import os
+import random
+import uuid
 
 from pynamodb.attributes import (UnicodeAttribute, UTCDateTimeAttribute)
 from pynamodb.models import Model
@@ -29,9 +31,28 @@ class AssetModel(Model):
     createdAt = UTCDateTimeAttribute(null=False, default=datetime.utcnow)
     updatedAt = UTCDateTimeAttribute(null=False, default=datetime.utcnow)
 
-    def __str__(self):
-        return 'id:{}, state:{}'.format(self.id, self.state)
+    @classmethod
+    def create(cls):
+        """
+         function to create new Asset object with random hash key
+         :return: asset model
+         """
+        _random = random.Random()
+        _uuid = uuid.UUID(int=_random.getrandbits(128)).__str__()
+        return AssetModel(_uuid)
 
-    def save(self, conditional_operator=None, **expected_values):
-        self.updatedAt = datetime.utcnow()
-        super(AssetModel, self).save()
+    def mark_received(self):
+        """
+        Mark asset as having been received via the s3 objectCreated:Put event
+        """
+        return self.update(actions=[
+            AssetModel.state.set(AssetState.RECEIVED.name)
+        ])
+
+    def mark_deleted(self):
+        """
+        Mark asset as deleted (soft delete)
+        """
+        return self.update(actions=[
+            AssetModel.state.set(AssetState.DELETED.name)
+        ])

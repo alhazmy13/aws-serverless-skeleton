@@ -29,6 +29,11 @@ custom:
       WriteCapacityUnits: 1
       BillingMode: PROVISIONED
       PointInTimeRecoveryEnabled: false
+    DYNAMODB_UPLOAD_TABLE:
+      ReadCapacityUnits: 1
+      WriteCapacityUnits: 1
+      BillingMode: PROVISIONED
+      PointInTimeRecoveryEnabled: false
   es:
     ElasticsearchClusterConfig:
       InstanceType: t2.small.elasticsearch

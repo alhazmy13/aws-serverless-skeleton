@@ -30,6 +30,11 @@ custom:
       WriteCapacityUnits: 0
       BillingMode: PAY_PER_REQUEST
       PointInTimeRecoveryEnabled: true
+    DYNAMODB_UPLOAD_TABLE:
+      ReadCapacityUnits: 0
+      WriteCapacityUnits: 0
+      BillingMode: PAY_PER_REQUEST
+      PointInTimeRecoveryEnabled: true
   es:
     ElasticsearchClusterConfig:
       InstanceType: m4.large.elasticsearch

@@ -1,9 +1,7 @@
 from http import HTTPStatus
 
-from pynamodb.exceptions import (DeleteError, DoesNotExist,
-                                 GetError, TableDoesNotExist,
-                                 UpdateError)
-from src.app.upload.model import AssetModel, AssetState
+from pynamodb.exceptions import (DoesNotExist, GetError, UpdateError)
+from src.app.upload.model import AssetModel
 from src.common.decorator import api_response
 from src.common.exceptions import ExceptionHandler
 
@@ -30,10 +28,10 @@ class BucketTriggerService(object):
             asset_id = self.asset_path.split("/")[1]
             if 'ObjectCreated:Put' == self.event_name:
                 asset = AssetModel.get(hash_key=asset_id)
-                self.mark_received(asset=asset)
+                asset.mark_received()
             elif 'ObjectRemoved:Delete' == self.event_name:
                 asset = AssetModel.get(hash_key=asset_id)
-                self.mark_deleted(asset=asset)
+                asset.mark_deleted()
         except AssertionError as ex:
             ExceptionHandler.handel_exception(exception=ex)
             return HTTPStatus.BAD_REQUEST
@@ -43,12 +41,6 @@ class BucketTriggerService(object):
         except GetError as ex:
             ExceptionHandler.handel_exception(exception=ex)
             return HTTPStatus.BAD_REQUEST
-        except DeleteError as ex:
-            ExceptionHandler.handel_exception(exception=ex)
-            return HTTPStatus.BAD_REQUEST
-        except TableDoesNotExist as ex:
-            ExceptionHandler.handel_exception(exception=ex)
-            return HTTPStatus.BAD_REQUEST
         except DoesNotExist as ex:
             ExceptionHandler.handel_exception(exception=ex)
             return HTTPStatus.NOT_FOUND
@@ -56,19 +48,3 @@ class BucketTriggerService(object):
             ExceptionHandler.handel_exception(exception=ex)
             return HTTPStatus.BAD_REQUEST
         return HTTPStatus.ACCEPTED
-
-    @staticmethod
-    def mark_received(asset):
-        """
-        Mark asset as having been received via the s3 objectCreated:Put event
-        """
-        asset.state = AssetState.RECEIVED.name
-        asset.save()
-
-    @staticmethod
-    def mark_deleted(asset):
-        """
-        Mark asset as deleted (soft delete)
-        """
-        asset.state = AssetState.DELETED.name
-        asset.save()

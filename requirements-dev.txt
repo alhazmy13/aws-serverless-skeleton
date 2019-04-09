@@ -15,6 +15,6 @@ python-jose
 aws-requests-auth
 botocore
 callee
-openpyxl
+moto
 validators
 python-coveralls

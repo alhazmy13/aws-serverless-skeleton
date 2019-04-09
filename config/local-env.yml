@@ -44,6 +44,11 @@ custom:
       WriteCapacityUnits: 1
       BillingMode: PAY_PER_REQUEST
       PointInTimeRecoveryEnabled: false
+    DYNAMODB_UPLOAD_TABLE:
+      ReadCapacityUnits: 1
+      WriteCapacityUnits: 1
+      BillingMode: PROVISIONED
+      PointInTimeRecoveryEnabled: false
 
 functions:
   post_get:

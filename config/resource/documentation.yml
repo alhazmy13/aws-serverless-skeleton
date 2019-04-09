@@ -19,6 +19,9 @@ documentation:
       -
         name: SKELETON_Auth
         description: 'Auth functions'
+      -
+        name: SKELETON_Upload
+        description: 'Upload functions'
   models:
     -
       name: SkeletonPost

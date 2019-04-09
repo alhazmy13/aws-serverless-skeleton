@@ -1,6 +1,4 @@
 import os
-import random
-import uuid
 
 import boto3
 from botocore.client import Config
@@ -24,7 +22,8 @@ class CreatePreSignedUrlService(object):
         execute function
         :return: http response
         """
-        asset = self._create_upload_asset()
+        asset = AssetModel.create()
+        asset.save()
         upload_url = self._get_upload_url(key=self._get_key(asset=asset),
                                           ttl=os.environ['S3_UPLOAD_URL_DEFAULT_TTL'],
                                           region=os.environ['REGION'],
@@ -34,19 +33,6 @@ class CreatePreSignedUrlService(object):
             'id': asset.id
         }
         return response
-
-    @staticmethod
-    def _create_upload_asset():
-        """
-         function to create new Asset object with random hash key
-         :return: http response
-         """
-        _random = random.Random()
-        _random.seed(0)
-        asset = AssetModel()
-        asset.id = uuid.UUID(int=_random.getrandbits(128)).__str__()
-        asset.save()
-        return asset
 
     def _get_upload_url(self, key, region, bucket, ttl=300):
         """
