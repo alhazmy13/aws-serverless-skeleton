@@ -3,7 +3,7 @@ from http import HTTPStatus
 from pynamodb.exceptions import (DoesNotExist, GetError, UpdateError)
 from src.app.upload.model import AssetModel
 from src.common.decorator import api_response
-from src.common.exceptions import ExceptionHandler
+from src.common.exceptions import ExceptionHandler, S3UnsupportedEvent
 
 
 class BucketTriggerService(object):
@@ -32,7 +32,9 @@ class BucketTriggerService(object):
             elif 'ObjectRemoved:Delete' == self.event_name:
                 asset = AssetModel.get(hash_key=asset_id)
                 asset.mark_deleted()
-        except AssertionError as ex:
+            else:
+                raise S3UnsupportedEvent()
+        except IndexError as ex:
             ExceptionHandler.handel_exception(exception=ex)
             return HTTPStatus.BAD_REQUEST
         except UpdateError as ex:
@@ -44,7 +46,7 @@ class BucketTriggerService(object):
         except DoesNotExist as ex:
             ExceptionHandler.handel_exception(exception=ex)
             return HTTPStatus.NOT_FOUND
-        except KeyError as ex:
+        except S3UnsupportedEvent as ex:
             ExceptionHandler.handel_exception(exception=ex)
             return HTTPStatus.BAD_REQUEST
         return HTTPStatus.ACCEPTED

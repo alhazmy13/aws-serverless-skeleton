@@ -149,3 +149,4 @@ _meta
 node_modules
 .serverless
 config/aalhazmy-env.yml
+envname/**

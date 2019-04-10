@@ -46,3 +46,7 @@ class InvalidKeyException(Exception):
 class ItemNotFoundException(Exception):
     """ Exception when the item is not found or
     when the user doesnt have an access to requested item"""
+
+
+class S3UnsupportedEvent(Exception):
+    """Exception when the trigger called with Unsupported event name"""

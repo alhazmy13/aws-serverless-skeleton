@@ -11,10 +11,10 @@ flake8-import-order
 pyyaml
 testfixtures
 boto3
-python-jose
+moto==1.3.7
+python-jose==2.0.2
 aws-requests-auth
 botocore
 callee
-moto
 validators
 python-coveralls
